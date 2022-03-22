@@ -1,7 +1,7 @@
-import 'package:class_project/screens/second_screen.dart';
+import 'package:class_project/data/songs.dart';
 import 'package:flutter/material.dart';
-
-void main() {}
+import '../data/songs.dart';
+import 'lyrics_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,26 +9,40 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Container(
-        color: Colors.deepPurple.shade700,
-        child: Center(
-          child: ElevatedButton(
-            child: Text('Press me'),
-            onPressed: () {
-              print('Hello');
+      appBar: AppBar(
+        title: Text('My music'),
+      ),
+      body: SongList(),
+    );
+  }
+}
+
+class SongList extends StatelessWidget {
+  const SongList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: songTitles.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: ListTile(
+            title: Text(songTitles[index]),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              print(songTitles[index]);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const SecondScreen(
-                    name: 'Bob',
+                  builder: (context) => LyricsScreen(
+                    songTitle: songTitles[index],
                   ),
                 ),
               );
             },
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
